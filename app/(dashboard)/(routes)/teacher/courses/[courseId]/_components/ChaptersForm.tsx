@@ -24,7 +24,7 @@ interface ChaptersFormProps {
 }
 const formSchema = z.object({
     title: z.string().min(1),
-
+    isSection: z.boolean(),
 })
 
 
@@ -45,7 +45,7 @@ const ChaptersForm = ({ initialData, courseId }: ChaptersFormProps) => {
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
-        defaultValues: { title: "" },
+        defaultValues: { title: "", isSection: isCreatingSection },
     })
 
 
@@ -56,6 +56,7 @@ const ChaptersForm = ({ initialData, courseId }: ChaptersFormProps) => {
             await axios.post(`/api/courses/${courseId}/chapters`, values)
             toast.success("Chapter Created")
             toggleCreating()
+            toggleCreatingSection()
             router.refresh()
         } catch (error) {
             toast.error("Something Went Wrong");
@@ -121,13 +122,27 @@ const ChaptersForm = ({ initialData, courseId }: ChaptersFormProps) => {
                             )}
                         />
 
-                        <Button type='submit' disabled={!isValid || isSubmitting}>
-                            Create
-                        </Button>
-                        <Checkbox checked={isCreatingSection} onCheckedChange={toggleCreatingSection} className=' border-slate-400 ml-4' />
-                        <span className='ml-2 text-muted-foreground italic text-sm'>
-                            Make this a section
-                        </span>
+                        <div className='flex items-center'>
+                            <Button type='submit' disabled={!isValid || isSubmitting}>
+                                Create
+                            </Button>
+
+                            <FormField
+                                control={form.control}
+                                name='isSection'
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormControl>
+                                            <Checkbox checked={field.value} onCheckedChange={field.onChange} className=' border-slate-400 ml-4' />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <span className='ml-2 text-muted-foreground italic text-sm'>
+                                Make this a section
+                            </span>
+                        </div>
                     </form>
                 </Form>
             )}

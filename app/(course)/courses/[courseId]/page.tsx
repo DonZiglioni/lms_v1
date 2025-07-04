@@ -28,7 +28,11 @@ const CourseIdPage = async ({ params }: {
         return redirect('/')
     }
 
-    return redirect(`/courses/${courseId}/chapters/${course.chapters[0].id}`)
+    if (course.chapters[0].isSection) {
+        return redirect(`/courses/${courseId}/chapters/${course.chapters[1].id}`)
+    } else {
+        return redirect(`/courses/${courseId}/chapters/${course.chapters[0].id}`)
+    }
 }
 
 export default CourseIdPage

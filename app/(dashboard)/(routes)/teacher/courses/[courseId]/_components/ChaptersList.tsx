@@ -93,6 +93,11 @@ const ChaptersList = ({
                                                     Free
                                                 </Badge>
                                             )}
+                                            {chapter.isSection && (
+                                                <Badge >
+                                                    Section Header
+                                                </Badge>
+                                            )}
                                             <Badge
                                                 className={cn(
                                                     "bg-slate-500",

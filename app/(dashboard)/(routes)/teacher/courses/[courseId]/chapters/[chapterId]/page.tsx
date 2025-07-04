@@ -50,7 +50,11 @@ const ChapterIdPage = async ({ params }: {
 
     const completionText = `(${completedFields}/${totalFields})`
 
-    const isComplete = requiredFields.every(Boolean)
+    let isComplete = requiredFields.every(Boolean)
+
+    if (chapter.isSection) {
+        isComplete = true
+    }
 
     return (
         <>

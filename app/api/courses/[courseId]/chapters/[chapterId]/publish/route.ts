@@ -40,7 +40,19 @@ export const PATCH = async (
             }
         })
 
-        if (!chapter || !muxData || !chapter.title || !chapter.description || !chapter.videoUrl) {
+        if (chapter?.isSection === true) {
+            const publishedChapter = await db.chapter.update({
+                where: {
+                    id: chapterId,
+                    courseId: courseId
+                },
+                data: {
+                    isPublished: true
+                }
+            })
+
+            return NextResponse.json(publishedChapter)
+        } else if (!chapter || !muxData || !chapter.title || !chapter.description || !chapter.videoUrl) {
             return new NextResponse("Missing required fields", { status: 400 })
         }
 

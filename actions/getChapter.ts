@@ -76,6 +76,21 @@ const getChapter = async ({
                     position: 'asc'
                 }
             })
+
+            if (nextChapter?.isSection) {
+                nextChapter = await db.chapter.findFirst({
+                    where: {
+                        courseId: courseId,
+                        isPublished: true,
+                        position: {
+                            gt: chapter?.position + 1,
+                        }
+                    },
+                    orderBy: {
+                        position: 'asc'
+                    }
+                })
+            }
         }
 
         const userProgress = await db.userProgress.findUnique({

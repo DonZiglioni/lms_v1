@@ -10,6 +10,7 @@ const getProgress = async (
             where: {
                 courseId: courseId,
                 isPublished: true,
+                isSection: false,
             },
             select: {
                 id: true,

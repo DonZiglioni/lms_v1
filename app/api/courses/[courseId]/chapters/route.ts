@@ -11,7 +11,9 @@ export const POST = async (
         let user = await currentUser()
         const userId = user?.id
         const { courseId } = await params
-        const { title } = await req.json()
+        const { title, isSection } = await req.json()
+        console.log("IS SECTION:", isSection);
+
 
         if (!userId) {
             return new NextResponse("Unauthorized", { status: 401 })
@@ -40,8 +42,9 @@ export const POST = async (
         const chapter = await db.chapter.create({
             data: {
                 title,
-                courseId: await params.courseId,
-                position: newPosition
+                courseId: courseId,
+                position: newPosition,
+                isSection: isSection,
             }
         })
 
