@@ -18,8 +18,8 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
     let user = await currentUser()
     const userId = user?.id
 
-    const title = await searchParams.title
-    const categoryId = await searchParams.categoryId
+    const title = searchParams.title
+    const categoryId = searchParams.categoryId
 
     if (!userId) {
         return redirect('/')

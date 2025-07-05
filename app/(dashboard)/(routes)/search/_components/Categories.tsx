@@ -30,9 +30,9 @@ const iconMap: Record<Category['name'], IconType> = {
 
 const Categories = ({ items }: CategoriesProps) => {
     return (
-        <div className='flex items-center gap-x-2 overflow-x-auto pb-2'>
-            {items.map((item => (
-                <Suspense fallback={<div>Loading filters...</div>}>
+        <Suspense fallback={<div>Loading filters...</div>}>
+            <div className='flex items-center gap-x-2 overflow-x-auto pb-2'>
+                {items.map((item => (
 
                     <CategoryItem
                         key={item.id}
@@ -40,9 +40,9 @@ const Categories = ({ items }: CategoriesProps) => {
                         icon={iconMap[item.name]}
                         value={item.id}
                     />
-                </Suspense>
-            )))}
-        </div>
+                )))}
+            </div>
+        </Suspense>
     )
 }
 
