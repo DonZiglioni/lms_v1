@@ -1,9 +1,11 @@
+"use client"
+
 import { cn } from '@/lib/utils';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import React from 'react'
 import { IconType } from 'react-icons/lib'
 import qs from 'query-string'
-import { Suspense } from 'react';
+
 interface CategoryItemProps {
     label: string;
     value?: string;
@@ -39,7 +41,7 @@ const CategoryItem = ({
         router.push(url)
     }
     return (
-        <Suspense>
+        <>
             <button
                 type='button'
                 onClick={onClick}
@@ -53,7 +55,7 @@ const CategoryItem = ({
                     {label}
                 </div>
             </button>
-        </Suspense>
+        </>
     )
 }
 
