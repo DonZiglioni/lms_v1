@@ -15,7 +15,7 @@ import Actions from "./_components/Actions"
 
 
 const courseIdPage = async ({ params }: {
-    params: { courseId: string }
+    params: Promise<{ courseId: string }>
 }) => {
     const { courseId } = await params
     const user = await currentUser()

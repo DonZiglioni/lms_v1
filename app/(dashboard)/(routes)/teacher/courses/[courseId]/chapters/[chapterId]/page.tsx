@@ -15,7 +15,7 @@ import ChapterActions from '../../_components/ChapterActions'
 
 
 const ChapterIdPage = async ({ params }: {
-    params: { courseId: string; chapterId: string }
+    params: Promise<{ courseId: string; chapterId: string }>
 }) => {
     const { courseId, chapterId } = await params
     const user = await currentUser()

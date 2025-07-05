@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation'
 
 
 const CourseIdPage = async ({ params }: {
-    params: { courseId: string }
+    params: Promise<{ courseId: string }>
 }) => {
     const param = await params
     const courseId = param.courseId
