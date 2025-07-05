@@ -6,6 +6,7 @@ import getCourses from '@/actions/getCourses'
 import { currentUser } from "@clerk/nextjs/server"
 import { redirect } from 'next/navigation'
 import CoursesList from '@/components/CoursesList'
+import { Suspense } from 'react'
 
 interface SearchPageProps {
     searchParams: {
@@ -15,26 +16,25 @@ interface SearchPageProps {
 }
 
 const SearchPage = async ({
-    searchParams = {},
-}: {
-    searchParams?: Record<string, string | string[] | undefined>;
-}) => {
-    const { title, categoryId } = searchParams;
+    searchParams
+}: SearchPageProps) => {
+    let user = await currentUser()
+    const userId = user?.id
 
-    const user = await currentUser();
-    const userId = user?.id;
-
-    if (!userId) return redirect('/');
+    if (!userId) {
+        return redirect('/')
+    }
 
     const categories = await db.category.findMany({
-        orderBy: { name: 'asc' },
-    });
+        orderBy: {
+            name: 'asc'
+        }
+    })
 
     const courses = await getCourses({
         userId,
-        title: typeof title === "string" ? title : undefined,
-        categoryId: typeof categoryId === "string" ? categoryId : undefined,
-    });
+        ...searchParams,
+    })
 
     return (
         <>
@@ -42,10 +42,13 @@ const SearchPage = async ({
                 <SearchInput />
             </div>
             <div className='p-6 space-y-4'>
-                <Categories items={categories} />
+                <Suspense fallback={<div>Loading filters...</div>}>
+                    <Categories items={categories} />
+                </Suspense>
                 <CoursesList items={courses} />
             </div>
         </>
-    );
-};
+    )
+}
+
 export default SearchPage
