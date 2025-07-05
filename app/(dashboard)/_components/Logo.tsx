@@ -3,7 +3,7 @@ import Image from 'next/image'
 
 const Logo = () => {
     return (
-        <Image height={130} width={130} alt={"logo"} src={'/logo-linkedin.png'} />
+        <Image height={200} width={200} className='mt-2 pb-2' alt={"logo"} src={'/mixtechniques.png'} />
     )
 }
 
