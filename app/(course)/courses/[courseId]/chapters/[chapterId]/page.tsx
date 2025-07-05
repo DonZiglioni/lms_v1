@@ -18,7 +18,7 @@ const ChapterIdPage = async ({ params }: {
 }) => {
     let user = await currentUser()
     const userId = user?.id
-    const { courseId, chapterId } = await params
+    const { courseId, chapterId } = params
     if (!userId) {
         return redirect('/')
     }
