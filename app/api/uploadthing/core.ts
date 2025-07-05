@@ -5,8 +5,6 @@ import { UploadThingError } from "uploadthing/server";
 
 const f = createUploadthing();
 
-const auth = (req: Request) => ({ id: "fakeId" });
-
 const handleAuth = async () => {
     const user = await currentUser()
     const userId = user?.id
