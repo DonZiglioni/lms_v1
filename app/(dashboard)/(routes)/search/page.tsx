@@ -9,9 +9,9 @@ import { redirect } from 'next/navigation'
 import CoursesList from '@/components/CoursesList'
 
 interface SearchPageProps {
-    searchParams: {
-        title: string;
-        categoryId: string;
+    searchParams?: {
+        title?: string;
+        categoryId?: string;
     }
 }
 
