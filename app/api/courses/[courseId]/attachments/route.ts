@@ -6,7 +6,7 @@ import { isTeacher } from "@/lib/teacher"
 
 export const POST = async (
     req: Request,
-    { params }: { params: { courseId: string } }
+    { params }: { params: Promise<{ courseId: string }> }
 ) => {
     try {
         let user = await currentUser()
@@ -31,7 +31,7 @@ export const POST = async (
             data: {
                 url,
                 name: url.split('/').pop(),
-                courseId: await params.courseId,
+                courseId: courseId,
             }
         })
 
