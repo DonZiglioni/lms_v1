@@ -6,9 +6,9 @@ const nextConfig: NextConfig = {
       'utfs.io'
     ]
   },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
+  // eslint: {
+  //   ignoreDuringBuilds: true,
+  // },
   typescript: {
     ignoreBuildErrors: true,
   },

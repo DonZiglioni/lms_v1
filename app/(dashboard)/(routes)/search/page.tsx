@@ -1,5 +1,4 @@
 import { db } from '@/lib/db'
-import React from 'react'
 import Categories from './_components/Categories'
 import SearchInput from '@/components/SearchInput'
 import getCourses from '@/actions/getCourses'
@@ -9,18 +8,14 @@ import CoursesList from '@/components/CoursesList'
 import { Suspense } from 'react'
 
 interface SearchPageProps {
-    searchParams: {
-        title: string;
-        categoryId: string;
-    }
+    searchParams?: Record<string, string | string[] | undefined>;
 }
 
-const SearchPage = async ({
-    searchParams
-}: SearchPageProps) => {
+const SearchPage = async ({ searchParams }: SearchPageProps) => {
     let user = await currentUser()
     const userId = user?.id
-
+    const title = typeof searchParams?.title === 'string' ? searchParams.title : undefined;
+    const categoryId = typeof searchParams?.categoryId === 'string' ? searchParams.categoryId : undefined;
     if (!userId) {
         return redirect('/')
     }
@@ -33,7 +28,8 @@ const SearchPage = async ({
 
     const courses = await getCourses({
         userId,
-        ...searchParams,
+        title,
+        categoryId,
     })
 
     return (

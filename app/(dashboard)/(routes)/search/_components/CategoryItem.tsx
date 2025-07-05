@@ -2,7 +2,6 @@
 
 import { cn } from '@/lib/utils';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import React from 'react'
 import { IconType } from 'react-icons/lib'
 import qs from 'query-string'
 
