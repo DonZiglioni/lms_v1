@@ -6,6 +6,7 @@ import getCourses from '@/actions/getCourses'
 import { currentUser } from "@clerk/nextjs/server"
 import { redirect } from 'next/navigation'
 import CoursesList from '@/components/CoursesList'
+import { Suspense } from 'react'
 
 interface SearchPageProps {
     searchParams: Promise<{
@@ -38,7 +39,7 @@ const SearchPage = async ({
     })
 
     return (
-        <>
+        <Suspense>
             <div className='px-6 pt-6 md:hidden md:mb-0 block'>
                 <SearchInput />
             </div>
@@ -46,7 +47,7 @@ const SearchPage = async ({
                 <Categories items={categories} />
                 <CoursesList items={courses} />
             </div>
-        </>
+        </Suspense>
     )
 }
 
