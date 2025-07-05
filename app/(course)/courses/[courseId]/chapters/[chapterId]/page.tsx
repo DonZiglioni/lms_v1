@@ -11,14 +11,14 @@ import { File } from 'lucide-react';
 import CourseProgressButton from './_components/CourseProgressButton';
 
 const ChapterIdPage = async ({ params }: {
-    params: {
+    params: Promise<{
         courseId: string;
         chapterId: string;
-    }
+    }>
 }) => {
     let user = await currentUser()
     const userId = user?.id
-    //const { courseId, chapterId } = params
+    const { courseId, chapterId } = await params
     if (!userId) {
         return redirect('/')
     }
@@ -33,8 +33,8 @@ const ChapterIdPage = async ({ params }: {
         purchase,
     } = await getChapter({
         userId,
-        chapterId: params.chapterId,
-        courseId: params.courseId,
+        chapterId: chapterId,
+        courseId: courseId,
     })
 
     if (!chapter || !course) {
@@ -61,9 +61,9 @@ const ChapterIdPage = async ({ params }: {
             <div className='flex flex-col max-w-4xl mx-auto pb-20'>
                 <div className='p-4'>
                     <VideoPlayer
-                        chapterId={params.chapterId}
+                        chapterId={chapterId}
                         title={chapter.title}
-                        courseId={params.courseId}
+                        courseId={courseId}
                         nextChapterId={nextChapter?.id}
                         playbackId={muxData?.playbackId!}
                         isLocked={isLocked}
@@ -77,15 +77,15 @@ const ChapterIdPage = async ({ params }: {
                         </h2>
                         {purchase ? (
                             <CourseProgressButton
-                                chapterId={params.chapterId}
-                                courseId={params.courseId}
+                                chapterId={chapterId}
+                                courseId={courseId}
                                 nextChapterId={nextChapter?.id}
                                 isCompleted={!!userProgress?.isCompleted}
 
                             />
                         ) : (
                             <CourseEnrollButton
-                                courseId={params.courseId}
+                                courseId={courseId}
                                 price={course.price!}
                             />
                         )}
