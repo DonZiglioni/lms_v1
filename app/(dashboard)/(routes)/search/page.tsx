@@ -1,6 +1,5 @@
 import { db } from '@/lib/db'
 import React from 'react'
-import dynamic from 'next/dynamic'
 import Categories from './_components/Categories'
 import SearchInput from '@/components/SearchInput'
 import getCourses from '@/actions/getCourses'
@@ -20,8 +19,8 @@ const SearchPage = async ({
 }: SearchPageProps) => {
     let user = await currentUser()
     const userId = user?.id
-    const { title, categoryId } = await searchParams
-    // const params = await searchParams
+
+    const params = await searchParams
 
     if (!userId) {
         return redirect('/')
@@ -35,8 +34,7 @@ const SearchPage = async ({
 
     const courses = await getCourses({
         userId,
-        title,
-        categoryId,
+        ...params,
     })
 
     return (
