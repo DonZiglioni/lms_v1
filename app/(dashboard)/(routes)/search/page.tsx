@@ -21,7 +21,7 @@ const SearchPage = async ({
     let user = await currentUser()
     const userId = user?.id
 
-    const params = await searchParams
+    // const params = await searchParams
 
     if (!userId) {
         return redirect('/')
@@ -35,7 +35,7 @@ const SearchPage = async ({
 
     const courses = await getCourses({
         userId,
-        ...params,
+        ...searchParams,
     })
 
     return (
