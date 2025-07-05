@@ -1,6 +1,5 @@
 import { db } from '@/lib/db'
 import React from 'react'
-import dynamic from 'next/dynamic'
 import Categories from './_components/Categories'
 import SearchInput from '@/components/SearchInput'
 import getCourses from '@/actions/getCourses'
@@ -8,35 +7,32 @@ import { currentUser } from "@clerk/nextjs/server"
 import { redirect } from 'next/navigation'
 import CoursesList from '@/components/CoursesList'
 
-interface SearchPageProps {
+interface PageProps {
     searchParams?: {
         title?: string;
         categoryId?: string;
-    }
+    };
 }
 
-const SearchPage = async ({
-    searchParams
-}: SearchPageProps) => {
-    let user = await currentUser()
-    const userId = user?.id
-
-    // const params = await searchParams
+const SearchPage = async ({ searchParams = {} }: PageProps) => {
+    const user = await currentUser();
+    const userId = user?.id;
 
     if (!userId) {
-        return redirect('/')
+        return redirect('/');
     }
 
     const categories = await db.category.findMany({
         orderBy: {
             name: 'asc'
         }
-    })
+    });
 
     const courses = await getCourses({
         userId,
-        ...searchParams,
-    })
+        title: searchParams.title,
+        categoryId: searchParams.categoryId,
+    });
 
     return (
         <>
@@ -48,7 +44,7 @@ const SearchPage = async ({
                 <CoursesList items={courses} />
             </div>
         </>
-    )
-}
+    );
+};
 
-export default SearchPage
+export default SearchPage;
