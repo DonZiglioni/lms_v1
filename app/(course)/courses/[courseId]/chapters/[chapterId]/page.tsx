@@ -18,7 +18,7 @@ const ChapterIdPage = async ({ params }: {
 }) => {
     let user = await currentUser()
     const userId = user?.id
-    const { courseId, chapterId } = params
+    //const { courseId, chapterId } = params
     if (!userId) {
         return redirect('/')
     }
@@ -33,8 +33,8 @@ const ChapterIdPage = async ({ params }: {
         purchase,
     } = await getChapter({
         userId,
-        chapterId: chapterId,
-        courseId: courseId,
+        chapterId: params.chapterId,
+        courseId: params.courseId,
     })
 
     if (!chapter || !course) {
@@ -61,9 +61,9 @@ const ChapterIdPage = async ({ params }: {
             <div className='flex flex-col max-w-4xl mx-auto pb-20'>
                 <div className='p-4'>
                     <VideoPlayer
-                        chapterId={chapterId}
+                        chapterId={params.chapterId}
                         title={chapter.title}
-                        courseId={courseId}
+                        courseId={params.courseId}
                         nextChapterId={nextChapter?.id}
                         playbackId={muxData?.playbackId!}
                         isLocked={isLocked}
@@ -77,15 +77,15 @@ const ChapterIdPage = async ({ params }: {
                         </h2>
                         {purchase ? (
                             <CourseProgressButton
-                                chapterId={chapterId}
-                                courseId={courseId}
+                                chapterId={params.chapterId}
+                                courseId={params.courseId}
                                 nextChapterId={nextChapter?.id}
                                 isCompleted={!!userProgress?.isCompleted}
 
                             />
                         ) : (
                             <CourseEnrollButton
-                                courseId={courseId}
+                                courseId={params.courseId}
                                 price={course.price!}
                             />
                         )}
