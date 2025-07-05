@@ -15,27 +15,26 @@ interface SearchPageProps {
 }
 
 const SearchPage = async ({
-    searchParams
-}: SearchPageProps) => {
-    let user = await currentUser()
-    const userId = user?.id
+    searchParams = {},
+}: {
+    searchParams?: Record<string, string | string[] | undefined>;
+}) => {
+    const { title, categoryId } = searchParams;
 
-    const params = await searchParams
+    const user = await currentUser();
+    const userId = user?.id;
 
-    if (!userId) {
-        return redirect('/')
-    }
+    if (!userId) return redirect('/');
 
     const categories = await db.category.findMany({
-        orderBy: {
-            name: 'asc'
-        }
-    })
+        orderBy: { name: 'asc' },
+    });
 
     const courses = await getCourses({
         userId,
-        ...params,
-    })
+        title: typeof title === "string" ? title : undefined,
+        categoryId: typeof categoryId === "string" ? categoryId : undefined,
+    });
 
     return (
         <>
@@ -47,7 +46,6 @@ const SearchPage = async ({
                 <CoursesList items={courses} />
             </div>
         </>
-    )
-}
-
+    );
+};
 export default SearchPage
