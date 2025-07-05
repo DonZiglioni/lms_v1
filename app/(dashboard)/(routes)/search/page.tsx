@@ -6,6 +6,7 @@ import { currentUser } from "@clerk/nextjs/server"
 import { redirect } from 'next/navigation'
 import CoursesList from '@/components/CoursesList'
 import { Suspense } from 'react'
+import SearchClientWrapper from './_components/SearchClientWrapper'
 
 interface SearchPageProps {
     searchParams: {
@@ -42,12 +43,12 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
             <div className='px-6 pt-6 md:hidden md:mb-0 block'>
                 <SearchInput />
             </div>
-            <div className='p-6 space-y-4'>
-                <Suspense fallback={<div>Loading filters...</div>}>
-                    <Categories items={categories} />
-                </Suspense>
-                <CoursesList items={courses} />
-            </div>
+            <SearchClientWrapper
+                userId={userId}
+                categories={categories}
+                searchParams={searchParams}
+
+            />
         </>
     )
 }
