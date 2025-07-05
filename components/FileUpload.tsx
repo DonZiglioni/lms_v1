@@ -14,7 +14,7 @@ const FileUpload = ({
     endpoint,
 }: FileUploadProps) => {
     return (
-        <UploadDropzone<OurFileRouter>
+        <UploadDropzone<OurFileRouter, keyof OurFileRouter>
             endpoint={endpoint}
             onClientUploadComplete={(res: any) => {
                 onChange(res?.[0].url);
