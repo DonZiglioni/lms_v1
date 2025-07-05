@@ -4,7 +4,7 @@ import { db } from "@/lib/db"
 
 export const PUT = async (
     req: Request,
-    { params }: { params: { courseId: string, chapterId: string } }
+    { params }: { params: Promise<{ courseId: string, chapterId: string }> }
 ) => {
     try {
         let user = await currentUser()

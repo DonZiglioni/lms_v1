@@ -6,7 +6,7 @@ import { stripe } from '@/lib/stripe'
 
 export const POST = async (
     req: Request,
-    { params }: { params: { courseId: string } }
+    { params }: { params: Promise<{ courseId: string }> }
 ) => {
     try {
         let user = await currentUser()

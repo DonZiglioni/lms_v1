@@ -5,7 +5,7 @@ import { db } from "@/lib/db"
 
 export const PATCH = async (
     req: Request,
-    { params }: { params: { courseId: string } }
+    { params }: { params: Promise<{ courseId: string }> }
 ) => {
     try {
         let user = await currentUser()

@@ -6,12 +6,12 @@ import { isTeacher } from "@/lib/teacher"
 
 export const DELETE = async (
     req: Request,
-    { params }: { params: { courseId: string, attachmentId: string } }
+    { params }: { params: Promise<{ courseId: string, attachmentId: string }> }
 ) => {
     try {
         let user = await currentUser()
         const userId = user?.id
-        const { courseId } = await params
+        const { courseId, attachmentId } = await params
 
         if (!userId || !isTeacher(userId)) {
             return new NextResponse("Unauthorized", { status: 401 })
@@ -29,7 +29,7 @@ export const DELETE = async (
         const attachment = await db.attachment.delete({
             where: {
                 courseId: courseId,
-                id: await params.attachmentId
+                id: attachmentId
             },
         })
 
