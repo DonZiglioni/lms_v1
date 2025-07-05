@@ -8,14 +8,19 @@ import CoursesList from '@/components/CoursesList'
 import { Suspense } from 'react'
 
 interface SearchPageProps {
-    searchParams?: Record<string, string | string[] | undefined>;
+    searchParams: {
+        title: string;
+        categoryId: string;
+    };
 }
 
 const SearchPage = async ({ searchParams }: SearchPageProps) => {
     let user = await currentUser()
     const userId = user?.id
-    const title = typeof searchParams?.title === 'string' ? searchParams.title : undefined;
-    const categoryId = typeof searchParams?.categoryId === 'string' ? searchParams.categoryId : undefined;
+
+    const title = await searchParams.title
+    const categoryId = await searchParams.categoryId
+
     if (!userId) {
         return redirect('/')
     }
