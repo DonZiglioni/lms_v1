@@ -1,6 +1,7 @@
 import { db } from '@/lib/db'
 import React from 'react'
-import Categories from './_components/Categories'
+import dynamic from 'next/dynamic'
+const Categories = dynamic(() => import('./_components/Categories'), { ssr: false });
 import SearchInput from '@/components/SearchInput'
 import getCourses from '@/actions/getCourses'
 import { currentUser } from "@clerk/nextjs/server"
