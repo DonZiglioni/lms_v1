@@ -52,7 +52,13 @@ export const PATCH = async (
             })
 
             return NextResponse.json(publishedChapter)
-        } else if (!chapter || !muxData || !chapter.title || !chapter.description || !chapter.videoUrl) {
+        } else if (
+            !chapter ||
+            // !muxData ||
+            !chapter.title
+            //!chapter.description ||
+            // !chapter.videoUrl
+        ) {
             return new NextResponse("Missing required fields", { status: 400 })
         }
 

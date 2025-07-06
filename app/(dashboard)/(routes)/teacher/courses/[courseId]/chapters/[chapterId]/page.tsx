@@ -56,6 +56,12 @@ const ChapterIdPage = async ({ params }: {
         isComplete = true
     }
 
+    // ADDED FOR INITIAL STRUCTURE - DISABLE THE FIELD REQUIREMENTS
+    let isTesting = true;
+    if (isTesting) {
+        isComplete = true;
+    }
+
     return (
         <>
             {!chapter.isPublished && (
