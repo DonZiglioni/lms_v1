@@ -38,7 +38,7 @@ export default function RootLayout({
       <html lang="en">
         <Suspense >
           <body
-            className={`${geistSans.variable} ${geistMono.variable} antialiased `}
+            className={`${geistSans.variable} ${geistMono.variable} antialiased`}
           >
             <ConfettiProvider />
             <ToasterProvider />
