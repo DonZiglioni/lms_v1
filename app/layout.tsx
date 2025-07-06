@@ -36,7 +36,7 @@ export default function RootLayout({
   return (
     <ClerkProvider afterSignOutUrl="/">
       <html lang="en">
-        <Suspense fallback={<div>Loading filters...</div>}>
+        <Suspense >
           <body
             className={`${geistSans.variable} ${geistMono.variable} antialiased `}
           >

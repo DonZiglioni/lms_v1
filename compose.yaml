@@ -1,0 +1,20 @@
+services:
+  typescript-app:
+    container_name: typescript-app
+    build:
+      context: .
+    restart: unless-stopped
+    init: true
+    # env_file: ./.env  # Uncomment if .env file exists
+    ports:
+      - "3000:3000"  # Expose Next.js app on port 3000
+    networks:
+      - appnet
+    # If you add a database or other services, add 'depends_on' here
+
+# No external services (databases, caches, etc.) were detected in the README or codebase summary.
+# If you add a database (e.g., PostgreSQL), add it here and update 'depends_on' above.
+
+networks:
+  appnet:
+    driver: bridge
