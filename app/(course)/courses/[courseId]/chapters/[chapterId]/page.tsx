@@ -9,6 +9,7 @@ import { Separator } from '@/components/ui/separator';
 import Preview from '@/components/Preview';
 import { File } from 'lucide-react';
 import CourseProgressButton from './_components/CourseProgressButton';
+import CancelSubButton from './_components/CancelSubButton';
 
 const ChapterIdPage = async ({ params }: {
     params: Promise<{
@@ -41,8 +42,10 @@ const ChapterIdPage = async ({ params }: {
         return redirect('/')
     }
 
+    const isSubscribed = courseId === '01c8bde5-2172-44d9-a85d-e58837f1d505' && purchase;
     const isLocked = !chapter.isFree && !purchase;
     const completeOnEnd = !!purchase && !userProgress?.isCompleted;
+
 
     return (
         <div>
@@ -76,13 +79,20 @@ const ChapterIdPage = async ({ params }: {
                             {chapter.title}
                         </h2>
                         {purchase ? (
-                            <CourseProgressButton
-                                chapterId={chapterId}
-                                courseId={courseId}
-                                nextChapterId={nextChapter?.id}
-                                isCompleted={!!userProgress?.isCompleted}
+                            <>
+                                {isSubscribed && (
+                                    <CancelSubButton
+                                        courseId={courseId}
+                                    />
+                                )}
 
-                            />
+                                <CourseProgressButton
+                                    chapterId={chapterId}
+                                    courseId={courseId}
+                                    nextChapterId={nextChapter?.id}
+                                    isCompleted={!!userProgress?.isCompleted}
+                                />
+                            </>
                         ) : (
                             <CourseEnrollButton
                                 courseId={courseId}
